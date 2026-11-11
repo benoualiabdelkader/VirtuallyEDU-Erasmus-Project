@@ -2,7 +2,9 @@
  * Integration Tests — Auth flow (Login / Signup)
  * Tests the localStorage-based mock auth system.
  */
+import type { ReactElement } from 'react'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
+import '@testing-library/jest-dom/vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
@@ -10,7 +12,7 @@ import LoginScreen from '../screens/LoginScreen'
 import SignupScreen from '../screens/SignupScreen'
 
 // Helper to wrap screens with router
-function renderWithRouter(ui: React.ReactElement, initialPath = '/') {
+function renderWithRouter(ui: ReactElement, initialPath = '/') {
   return render(
     <MemoryRouter initialEntries={[initialPath]}>
       {ui}

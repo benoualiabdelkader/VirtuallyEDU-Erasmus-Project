@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import SplashScreen from './screens/SplashScreen'
 import OnboardingScreen from './screens/OnboardingScreen'
 import HomeScreen from './screens/HomeScreen'
@@ -11,7 +11,7 @@ import ReportsScreen from './screens/ReportsScreen'
 import LoginScreen from './screens/LoginScreen'
 import SignupScreen from './screens/SignupScreen'
 
-function ProtectedRoute({ authenticated, children }: { authenticated: boolean; children: React.ReactNode }) {
+function ProtectedRoute({ authenticated, children }: { authenticated: boolean; children: ReactNode }) {
   if (!authenticated) {
     return <Navigate to="/login" replace />
   }
