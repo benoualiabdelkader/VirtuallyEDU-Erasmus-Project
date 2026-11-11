@@ -83,3 +83,8 @@ dist-ssr/
 
 # Generated documentation binaries
 *.pdf
+
+# MCP and tooling local metadata
+.github/context-mode/
+.context-mode/
+
