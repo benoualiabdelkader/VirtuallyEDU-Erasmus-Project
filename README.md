@@ -21,6 +21,49 @@ The application analyzes user-submitted text and images for emotional bias, urge
 
 ---
 
+## Interface Showcase & Live Demo
+
+### Launch Screen — Baseera Digital Literacy Coach
+
+The welcoming splash screen setting the stage for a secure, intelligent, and mindful digital experience. It features a premium, minimalist design that reflects the award-winning nature of the platform.
+
+![Launch Screen - Baseera Digital Literacy Coach](docs/images/launch_screen.jpg)
+
+---
+
+### Share with Intention + AI-Powered Fact Checking + Cultivate Critical Thinking
+
+- **Share with Intention**: Pause and reflect on the accuracy of digital media before passing it along to others.
+- **AI-Powered Fact Checking**: Harness intelligent analysis to unpack biases, detect anomalies, and verify sources instantly.
+- **Cultivate Critical Thinking**: Develop daily discernment habits that empower you to navigate digital information with confidence.
+
+![Share with Intention + AI-Powered Fact Checking + Cultivate Critical Thinking](docs/images/onboarding_screens.jpg)
+
+---
+
+### Digital Clarity Hub + Share To Analyze + AI Analysis Result
+
+- **Digital Clarity Hub**: Analyze content for bias and accuracy, and track your weekly activity with interactive stats and essential tools like Privacy Scan and Fact History.
+- **Share To Analyze**: Upload or paste links, articles, or media to evaluate factual claims and detect manipulation techniques, backed by advanced verification protocols.
+- **AI Analysis Result**: Discover emotional bias levels, explore critical reflection questions, and review verified related sources to strengthen your digital resilience.
+
+![Digital Clarity Hub + Share To Analyze + AI Analysis Result](docs/images/core_application_screens.jpg)
+
+---
+
+### QR CODE Demo
+
+Scan this QR code with any mobile device to download the standalone Android application package (`baseera.apk`) or test via the responsive web application:
+
+<p align="center">
+  <img src="docs/images/demo_apk_qr_code.jpg" width="220" alt="Baseera APK Demo QR Code" />
+</p>
+
+- **Direct APK Download**: [mediafire.com/file/ppu23zjxboczhhf/baseera.apk/file](https://www.mediafire.com/file/ppu23zjxboczhhf/baseera.apk/file)
+- **Instant Guest Testing**: Launch the app and select **Continue as Guest** to evaluate features without registration.
+
+---
+
 ## Technology Stack
 
 | Layer | Technology | Purpose |
