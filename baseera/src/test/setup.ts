@@ -1,4 +1,5 @@
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/vitest'
+import { vi, beforeEach, afterEach } from 'vitest'
 
 // Mock import.meta.env for all tests
 Object.defineProperty(import.meta, 'env', {
@@ -13,7 +14,7 @@ Object.defineProperty(import.meta, 'env', {
 })
 
 // Mock fetch globally
-global.fetch = vi.fn()
+globalThis.fetch = vi.fn()
 
 // Silence console.warn/info during tests (keep errors)
 beforeEach(() => {
@@ -25,3 +26,4 @@ afterEach(() => {
   vi.restoreAllMocks()
   vi.clearAllMocks()
 })
+
