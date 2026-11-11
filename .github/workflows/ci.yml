@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    name: Lint, Test & Build
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: baseera
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: baseera/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Static Analysis (oxlint)
+        run: npm run lint
+
+      - name: Type Check (tsc)
+        run: npx tsc -b
+
+      - name: Test Suite (vitest)
+        run: npm test
+
+      - name: Production Build
+        run: npm run build
