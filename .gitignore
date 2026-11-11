@@ -68,3 +68,18 @@ data/processed/*
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Binary releases & build logs
+*.apk
+*.log
+dist/
+dist-ssr/
+
+# LaTeX aux files
+*.aux
+*.out
+*.toc
+*.synctex.gz
+
+# Generated documentation binaries
+*.pdf
