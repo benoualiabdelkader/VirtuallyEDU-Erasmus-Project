@@ -77,7 +77,7 @@ LLM inference requests pass through a centralized infrastructure service. The se
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/benoualiabdelkader/VirtuallyEDU-Erasmus-Project.git
-   cd VirtuallyEDU-Erasmus-Project
+   cd VirtuallyEDU-Erasmus-Project/baseera
    ```
 
 2. **Install project dependencies**:
@@ -104,6 +104,7 @@ LLM inference requests pass through a centralized infrastructure service. The se
 
 ### Development Server
 ```bash
+cd baseera
 npm run dev
 ```
 The application will be accessible at `http://localhost:5173`.
@@ -127,6 +128,12 @@ The application will be accessible at `http://localhost:5173`.
 ---
 
 ## Verification & Testing
+
+Navigate to the `baseera` directory to run verification commands:
+
+```bash
+cd baseera
+```
 
 ### Automated Test Suite
 Runs all 49 unit and integration tests across storage, authentication, and AI provider fallback chains:
@@ -152,18 +159,12 @@ npm run build
 
 The repository includes a configured Capacitor setup for building native Android APKs:
 
-1. Build the web application:
-   ```bash
-   npm run build
-   ```
-2. Sync assets with the native Android project:
-   ```bash
-   npx cap sync android
-   ```
-3. Open in Android Studio or build with Gradle:
-   ```bash
-   npx cap open android
-   ```
+```bash
+cd baseera
+npm run build
+npx cap sync android
+npx cap open android
+```
 
 ---
 
