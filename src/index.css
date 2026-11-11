@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f0eded;
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  #root {
+    display: flex;
+    justify-content: center;
+    min-height: 100dvh;
+    background-color: #f0eded;
+  }
+}
+
+@layer components {
+  .app-shell {
+    @apply relative w-full bg-surface min-h-dvh flex flex-col overflow-hidden;
+    max-width: 480px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.12);
+  }
+
+  .screen-enter {
+    animation: slideUp 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav-tab {
+    @apply flex flex-col items-center justify-center min-w-[56px] min-h-[44px] py-1 transition-colors duration-150 text-secondary;
+  }
+
+  .nav-tab.active {
+    @apply text-primary-container font-bold;
+  }
+
+  .btn-primary {
+    @apply w-full h-14 rounded-2xl bg-primary-container text-on-primary font-bold text-body-lg flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.98] hover:bg-primary;
+  }
+
+  .btn-outline {
+    @apply w-full h-14 rounded-2xl border-2 border-outline text-secondary font-bold text-body-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98];
+  }
+
+  .card {
+    @apply bg-surface-container-lowest rounded-xl shadow-sm;
+  }
+
+  /* Processing ring animation */
+  @keyframes dash {
+    0% { stroke-dashoffset: 280; }
+    100% { stroke-dashoffset: 0; }
+  }
+
+  .progress-ring-fill {
+    animation: dash 3s ease-in-out forwards;
+    stroke-dasharray: 280;
+    stroke-dashoffset: 280;
+  }
+}
