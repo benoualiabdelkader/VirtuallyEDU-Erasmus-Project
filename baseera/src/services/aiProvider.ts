@@ -37,9 +37,18 @@ export interface LLMMessage {
 
 // Environment & Configuration
 const DEFAULT_BASE_URL = 'https://api.groq.com/openai/v1/chat/completions'
-const BASE_URL = (import.meta.env.VITE_AI_BASE_URL as string) || DEFAULT_BASE_URL
-const API_KEY = (import.meta.env.VITE_AI_API_KEY as string) || (import.meta.env.VITE_GROQ_API_KEY as string) || ''
-const PRIMARY_MODEL = (import.meta.env.VITE_AI_MODEL as string) || 'qwen/qwen3.8-27b'
+
+function getBaseUrl(): string {
+  return (import.meta.env.VITE_AI_BASE_URL as string) || DEFAULT_BASE_URL
+}
+
+function getApiKey(): string {
+  return (import.meta.env.VITE_AI_API_KEY as string) || (import.meta.env.VITE_GROQ_API_KEY as string) || ''
+}
+
+function getPrimaryModel(): string {
+  return (import.meta.env.VITE_AI_MODEL as string) || 'qwen/qwen3.8-27b'
+}
 
 export const FALLBACK_QUESTIONS = [
   'What emotions does this content activate in you — and why might someone want to activate those emotions?',
@@ -78,17 +87,19 @@ async function callChatCompletions(
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), 25000)
 
-  let endpoint = BASE_URL
+  let endpoint = getBaseUrl()
   if (!endpoint.endsWith('/chat/completions')) {
     endpoint = endpoint.replace(/\/+$/, '') + '/chat/completions'
   }
+
+  const apiKey = getApiKey()
 
   let res: Response
   try {
     res = await fetch(endpoint, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -180,10 +191,12 @@ export async function analyzeContent(
   userContent: string,
   media?: MediaPayload | null
 ): Promise<AnalysisResult> {
-  if (!API_KEY) {
+  const apiKey = getApiKey()
+  if (!apiKey) {
     return buildFallback('no-api-key')
   }
 
+  const primaryModel = getPrimaryModel()
   const hasImage = !!(media?.base64 && media?.type?.startsWith('image/'))
   const promptText = buildPrompt(userContent, hasImage, media?.name)
 
@@ -202,9 +215,9 @@ export async function analyzeContent(
     }]
 
     try {
-      const raw = await callChatCompletions(PRIMARY_MODEL, visionMessages, true)
-      const result = parseResponse(raw, PRIMARY_MODEL)
-      result._model = `${PRIMARY_MODEL}:vision`
+      const raw = await callChatCompletions(primaryModel, visionMessages, true)
+      const result = parseResponse(raw, primaryModel)
+      result._model = `${primaryModel}:vision`
       return result
     } catch {
       // Vision unavailable, continue to text-fallback strategy
@@ -218,9 +231,9 @@ export async function analyzeContent(
     const textMessages: LLMMessage[] = [{ role: 'user', content: contextPrompt }]
 
     try {
-      const raw = await callChatCompletions(PRIMARY_MODEL, textMessages, true)
-      const result = parseResponse(raw, PRIMARY_MODEL)
-      result._model = `${PRIMARY_MODEL}:text-fallback`
+      const raw = await callChatCompletions(primaryModel, textMessages, true)
+      const result = parseResponse(raw, primaryModel)
+      result._model = `${primaryModel}:text-fallback`
       return result
     } catch (e2: any) {
       return buildFallback(`all-strategies-failed:${e2?.message?.slice(0, 40) || 'error'}`)
@@ -231,8 +244,8 @@ export async function analyzeContent(
   const messages: LLMMessage[] = [{ role: 'user', content: promptText }]
 
   try {
-    const raw = await callChatCompletions(PRIMARY_MODEL, messages, true)
-    return parseResponse(raw, PRIMARY_MODEL)
+    const raw = await callChatCompletions(primaryModel, messages, true)
+    return parseResponse(raw, primaryModel)
   } catch (err: any) {
     const msg = err?.message ?? String(err)
     console.error('[Baseera] Analysis failed:', msg)
@@ -241,14 +254,15 @@ export async function analyzeContent(
 }
 
 export async function preflightCheck(): Promise<{ ok: boolean; model: string; error?: string }> {
+  const primaryModel = getPrimaryModel()
   try {
     const txt = await callChatCompletions(
-      PRIMARY_MODEL,
+      primaryModel,
       [{ role: 'user', content: 'Reply with only the word: OK' }],
       false,
     )
-    return { ok: !!txt.trim(), model: PRIMARY_MODEL }
+    return { ok: !!txt.trim(), model: primaryModel }
   } catch (e) {
-    return { ok: false, model: PRIMARY_MODEL, error: (e as Error).message }
+    return { ok: false, model: primaryModel, error: (e as Error).message }
   }
 }
